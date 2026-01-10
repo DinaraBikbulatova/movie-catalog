@@ -1,0 +1,76 @@
+/* ========== ОСНОВНЫЕ СТИЛИ ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #ffeef8 0%, #fff0f5 100%);
+    color: #37474f;
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* ========== ШАПКА ========== */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(103, 58, 183, 0.08);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+h1 {
+    color: #455a64;
+    font-size: 2.8em;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, #78909c 0%, #546e7a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+header p {
+    color: #607d8b;
+    font-size: 1.2em;
+}
+
+/* ========== КАРТОЧКИ ========== */
+.card {
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 18px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 6px 20px rgba(103, 58, 183, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(12px);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(103, 58, 183, 0.1);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+h3 {
+    color: #546e7a;
+    margin-bottom: 20px;
+    font-size: 1.4em;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #eceff1;
+}

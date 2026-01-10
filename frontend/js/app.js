@@ -80,3 +80,71 @@ async function initApp() {
 
 // Запускаем инициализацию при загрузке страницы
 document.addEventListener('DOMContentLoaded', initApp);
+
+// Добавить фильм
+async function addFilm() {
+    console.log("Добавление фильма...");
+    
+    const title = document.getElementById('title').value.trim();
+    const year = document.getElementById('year').value;
+    const genre = document.getElementById('genre').value.trim();
+    const rating = document.getElementById('rating').value;
+    const description = document.getElementById('description').value.trim();
+    
+    // Валидация
+    if (!title) {
+        alert('⚠️ Введите название фильма');
+        document.getElementById('title').focus();
+        return;
+    }
+    
+    if (!year || year < 1900 || year > 2024) {
+        alert('⚠️ Введите корректный год (1900-2024)');
+        document.getElementById('year').focus();
+        return;
+    }
+    
+    if (!genre) {
+        alert('⚠️ Введите жанр фильма');
+        document.getElementById('genre').focus();
+        return;
+    }
+    
+    // Создаем объект фильма
+    const film = {
+        title: title,
+        year: parseInt(year),
+        genre: genre,
+        rating: rating ? parseFloat(rating) : 0,
+        description: description,
+        favorite: false
+    };
+    
+    console.log("Добавляем фильм:", film);
+    
+    try {
+        // Отправляем на сервер
+        const result = await api.addFilm(film);
+        console.log("Фильм добавлен:", result);
+        
+        // Очищаем форму
+        document.getElementById('title').value = '';
+        document.getElementById('year').value = '';
+        document.getElementById('genre').value = '';
+        document.getElementById('rating').value = '';
+        document.getElementById('description').value = '';
+        
+        // Обновляем список фильмов
+        await loadFilms();
+        
+        // Показываем уведомление
+        alert('✅ Фильм успешно добавлен!');
+        
+    } catch (error) {
+        console.error("Ошибка при добавлении фильма:", error);
+        alert('❌ Не удалось добавить фильм. Проверьте сервер.');
+    }
+}
+
+// Экспортируем функцию в глобальную область
+window.addFilm = addFilm;

@@ -45,3 +45,23 @@
     <script src="js/app.js"></script>
 </body>
 </html>
+    <!-- МОДАЛЬНОЕ ОКНО РЕДАКТИРОВАНИЯ -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <h3><i class="fas fa-edit"></i> Редактировать фильм</h3>
+            <input type="text" id="editTitle" placeholder="Название">
+            <input type="number" id="editYear" placeholder="Год">
+            <input type="text" id="editGenre" placeholder="Жанр">
+            <input type="number" id="editRating" placeholder="Рейтинг" step="0.1">
+            <textarea id="editDescription" placeholder="Описание"></textarea>
+            
+            <div class="modal-buttons">
+                <button id="saveBtn" onclick="saveFilm()">
+                    <i class="fas fa-save"></i> Сохранить изменения
+                </button>
+                <button id="cancelBtn" onclick="closeModal()">
+                    <i class="fas fa-times"></i> Отменить
+                </button>
+            </div>
+        </div>
+    </div>

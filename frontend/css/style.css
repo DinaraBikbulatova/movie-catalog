@@ -221,3 +221,338 @@ textarea {
     margin-bottom: 20px;
     flex-grow: 1;
 }
+
+/* ========== КНОПКИ В КАРТОЧКЕ ========== */
+.film-actions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: auto;
+}
+
+.film-actions button {
+    padding: 10px 12px;
+    font-size: 13px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 44px;
+}
+
+.film-actions .fav-btn {
+    background: linear-gradient(135deg, #b39ddb 0%, #9575cd 100%);
+    color: white;
+}
+
+.film-actions .edit-btn {
+    background: linear-gradient(135deg, #90caf9 0%, #64b5f6 100%);
+    color: white;
+}
+
+.film-actions .delete-btn {
+    background: linear-gradient(135deg, #ef9a9a 0%, #e57373 100%);
+    color: white;
+}
+
+.film-actions button:hover {
+    transform: translateY(-2px);
+    filter: brightness(105%);
+}
+
+/* ========== МОДАЛЬНОЕ ОКНО ========== */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(96, 125, 139, 0.4);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 35px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 20px 40px rgba(84, 110, 122, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(20px);
+}
+
+/* ========== КНОПКИ В МОДАЛЬНОМ ОКНЕ ========== */
+.modal-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.modal-buttons button {
+    padding: 16px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+#saveBtn {
+    background: linear-gradient(135deg, #80cbc4 0%, #4db6ac 100%);
+    color: white;
+}
+
+#cancelBtn {
+    background: linear-gradient(135deg, #ef9a9a 0%, #e57373 100%);
+    color: white;
+}
+
+.modal-buttons button:hover {
+    transform: translateY(-3px);
+}
+
+/* ========== ФИЛЬМ В ИЗБРАННОМ ========== */
+.film-card.favorite {
+    border-color: #b39ddb;
+    background: linear-gradient(135deg, rgba(243, 229, 245, 0.9) 0%, rgba(225, 190, 231, 0.9) 100%);
+}
+
+/* ========== ПОИСК ========== */
+.search-box {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.search-box input {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.search-btn {
+    background: linear-gradient(135deg, #90caf9 0%, #64b5f6 100%);
+    color: white;
+    padding: 14px 20px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    transition: all 0.3s;
+    white-space: nowrap;
+}
+
+.search-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(100, 181, 246, 0.25);
+}
+
+/* ========== ФИЛЬТРЫ ========== */
+.filters-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.filters-row select {
+    flex: 1;
+    margin-bottom: 0;
+    background: rgba(255, 255, 255, 0.9);
+    cursor: pointer;
+}
+
+/* ========== КНОПКА ИЗБРАННОГО ========== */
+#favoritesBtn {
+    background: linear-gradient(135deg, #b39ddb 0%, #9575cd 100%);
+    color: white;
+    border: none;
+    padding: 16px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+#favoritesBtn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 22px rgba(149, 117, 205, 0.25);
+}
+
+/* ========== ЗАГОЛОВОК СЕКЦИИ ========== */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(103, 58, 183, 0.06);
+    backdrop-filter: blur(10px);
+}
+
+.stats {
+    background: linear-gradient(135deg, #b39ddb 0%, #9575cd 100%);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: 600;
+}
+
+/* ========== СЕКЦИЯ ИЗБРАННЫХ ========== */
+#favoritesSection {
+    background: rgba(243, 229, 245, 0.8);
+    border-radius: 20px;
+    padding: 25px;
+    margin-top: 30px;
+    border: 2px dashed #b39ddb;
+    backdrop-filter: blur(10px);
+}
+
+/* ========== АДАПТИВНОСТЬ ========== */
+@media (max-width: 1200px) {
+    .main {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        flex: none;
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .films-list {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    header {
+        padding: 20px;
+    }
+    
+    h1 {
+        font-size: 2.2em;
+    }
+    
+    .films-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .filters-row {
+        flex-direction: column;
+    }
+    
+    .search-box {
+        flex-direction: column;
+    }
+    
+    .search-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .film-actions {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    
+    .film-actions button {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .modal-content {
+        padding: 25px;
+        width: 95%;
+    }
+    
+    .modal-buttons {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    
+    .film-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .film-year {
+        align-self: flex-start;
+    }
+    
+    .film-actions button {
+        font-size: 12px;
+        padding: 12px 10px;
+    }
+}
+
+/* ========== АНИМАЦИИ ========== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card, .film-card {
+    animation: fadeIn 0.4s ease-out;
+}
+
+/* ========== СКРОЛЛБАР ========== */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #eceff1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #b0bec5 0%, #90a4ae 100%);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #90a4ae 0%, #78909c 100%);
+}

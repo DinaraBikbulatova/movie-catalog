@@ -27,15 +27,81 @@
                         <i class="fas fa-plus-circle"></i> Добавить фильм
                     </button>
                 </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-search"></i> Поиск и сортировка</h3>
+                    
+                    <!-- КНОПКА ПОИСКА РЯДОМ С ПОЛЕМ -->
+                    <div class="search-box">
+                        <input type="text" id="search" placeholder="Поиск по названию..." 
+                               onkeypress="if(event.key === 'Enter') searchFilms()">
+                        <button onclick="searchFilms()" class="search-btn">
+                            <i class="fas fa-search"></i> Найти
+                        </button>
+                    </div>
+                    
+                    <!-- ФИЛЬТРЫ В РЯД -->
+                    <div class="filters-row">
+                        <select id="genreFilter">
+                            <option value="">Все жанры</option>
+                        </select>
+                        <select id="sortBy" onchange="sortFilms()">
+                            <option value="title">По названию</option>
+                            <option value="year_desc">Новые</option>
+                            <option value="year_asc">Старые</option>
+                            <option value="rating">Рейтинг</option>
+                        </select>
+                    </div>
+                    
+                    <!-- КНОПКА ИЗБРАННОГО -->
+                    <button onclick="toggleFavorites()" id="favoritesBtn">
+                        <i class="fas fa-heart"></i> Показать избранное
+                    </button>
+                </div>
             </div>
 
             <div class="content">
                 <div class="header">
                     <h3 id="filmsTitle">Все фильмы (<span id="filmsCount">0</span>)</h3>
+                    <div class="stats">
+                        <span id="favoritesCount">0</span> избранных
+                    </div>
                 </div>
 
+                <!-- ОСНОВНОЙ СПИСОК ФИЛЬМОВ -->
                 <div id="filmsList" class="films-list">
                     <!-- Фильмы загружаются сюда -->
+                </div>
+                
+                <!-- ОТДЕЛЬНЫЙ СПИСОК ИЗБРАННЫХ -->
+                <div id="favoritesSection" style="display: none; margin-top: 30px;">
+                    <div class="header">
+                        <h3><i class="fas fa-heart"></i> Избранные фильмы (<span id="favoritesListCount">0</span>)</h3>
+                    </div>
+                    <div id="favoritesList" class="films-list">
+                        <!-- Избранные фильмы здесь -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- МОДАЛЬНОЕ ОКНО РЕДАКТИРОВАНИЯ -->
+        <div id="editModal" class="modal">
+            <div class="modal-content">
+                <h3><i class="fas fa-edit"></i> Редактировать фильм</h3>
+                <input type="text" id="editTitle" placeholder="Название">
+                <input type="number" id="editYear" placeholder="Год">
+                <input type="text" id="editGenre" placeholder="Жанр">
+                <input type="number" id="editRating" placeholder="Рейтинг" step="0.1">
+                <textarea id="editDescription" placeholder="Описание"></textarea>
+                
+                <div class="modal-buttons">
+                    <button id="saveBtn" onclick="saveFilm()">
+                        <i class="fas fa-save"></i> Сохранить изменения
+                    </button>
+                    <button id="cancelBtn" onclick="closeModal()">
+                        <i class="fas fa-times"></i> Отменить
+                    </button>
                 </div>
             </div>
         </div>

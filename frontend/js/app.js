@@ -333,3 +333,222 @@ window.toggleFavorite = toggleFavorite;
 window.openEditModal = openEditModal;
 window.saveFilm = saveFilm;
 window.closeModal = closeModal;
+
+// ========== ПОИСК И ФИЛЬТРАЦИЯ ==========
+
+// Поиск фильмов
+async function searchFilms() {
+    const query = document.getElementById('search').value;
+    const genre = document.getElementById('genreFilter').value;
+    
+    console.log("Поиск:", { query, genre });
+    
+    try {
+        // Для демо - фильтруем локально
+        let results = films;
+        
+        if (query) {
+            results = results.filter(f => 
+                f.title.toLowerCase().includes(query.toLowerCase())
+            );
+        }
+        
+        if (genre) {
+            results = results.filter(f => f.genre === genre);
+        }
+        
+        console.log("Найдено:", results.length);
+        displayFilms(results);
+    } catch (error) {
+        console.error("Ошибка поиска:", error);
+        displayFilms(films); // Показываем все если ошибка
+    }
+}
+
+// Сортировка фильмов
+function sortFilms() {
+    const sortBy = document.getElementById('sortBy').value;
+    let sorted = [...films];
+    
+    switch (sortBy) {
+        case 'title':
+            sorted.sort((a, b) => a.title.localeCompare(b.title));
+            break;
+        case 'year_desc':
+            sorted.sort((a, b) => b.year - a.year);
+            break;
+        case 'year_asc':
+            sorted.sort((a, b) => a.year - b.year);
+            break;
+        case 'rating':
+            sorted.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+            break;
+    }
+    
+    displayFilms(sorted);
+}
+
+// Обновить фильтр жанров
+function updateGenreFilter() {
+    console.log("Обновление фильтра жанров...");
+    
+    const select = document.getElementById('genreFilter');
+    const genres = [...new Set(films.map(f => f.genre).filter(Boolean))];
+    
+    console.log("Найдено жанров:", genres.length);
+    
+    // Сохраняем текущее значение
+    const currentValue = select.value;
+    
+    // Очищаем и добавляем жанры
+    select.innerHTML = '<option value="">Все жанры</option>';
+    genres.forEach(genre => {
+        const option = document.createElement('option');
+        option.value = genre;
+        option.textContent = genre;
+        select.appendChild(option);
+    });
+    
+    // Восстанавливаем выбранное значение
+    if (genres.includes(currentValue)) {
+        select.value = currentValue;
+    }
+}
+
+// ========== ИЗБРАННЫЕ ФИЛЬМЫ ==========
+let showOnlyFavorites = false;
+
+// Обновить счетчик избранных
+function updateFavoritesCount() {
+    const favoritesCount = films.filter(f => f.favorite).length;
+    document.getElementById('favoritesCount').textContent = favoritesCount;
+}
+
+// Переключить отображение избранных
+function toggleFavorites() {
+    const favoritesSection = document.getElementById('favoritesSection');
+    const button = document.getElementById('favoritesBtn');
+    const isShowing = favoritesSection.style.display === 'block';
+    
+    if (isShowing) {
+        // Скрываем избранные
+        favoritesSection.style.display = 'none';
+        button.innerHTML = '<i class="fas fa-heart"></i> Показать избранное';
+        showOnlyFavorites = false;
+    } else {
+        // Показываем избранные
+        favoritesSection.style.display = 'block';
+        button.innerHTML = '<i class="fas fa-heart"></i> Скрыть избранное';
+        showOnlyFavorites = true;
+        loadFavorites();
+    }
+}
+
+// Загрузить избранные
+async function loadFavorites() {
+    try {
+        const favorites = films.filter(film => film.favorite);
+        
+        // Обновляем счетчик
+        document.getElementById('favoritesListCount').textContent = favorites.length;
+        
+        // Отображаем избранные
+        displayFavorites(favorites);
+        
+    } catch (error) {
+        console.error("Ошибка загрузки избранных:", error);
+    }
+}
+
+// Отобразить избранные
+function displayFavorites(films) {
+    const container = document.getElementById('favoritesList');
+    
+    if (films.length === 0) {
+        container.innerHTML = `
+            <div class="card" style="text-align: center; padding: 30px; grid-column: 1 / -1;">
+                <i class="fas fa-heart fa-3x" style="color: #b39ddb; margin-bottom: 15px;"></i>
+                <h3>Нет избранных фильмов</h3>
+                <p>Добавьте фильмы в избранное, нажав на  💜 </p>
+            </div>
+        `;
+        return;
+    }
+    
+    let html = '';
+    
+    films.forEach(film => {
+        html += `
+            <div class="film-card favorite" data-id="${film.id}">
+                <div class="film-header">
+                    <div class="film-title">${film.title}</div>
+                    <div class="film-year">${film.year}</div>
+                </div>
+                
+                <div class="film-genre">${film.genre}</div>
+                
+                ${film.rating ? `
+                    <div class="film-rating">⭐ ${film.rating}/10</div>
+                ` : ''}
+                
+                ${film.description ? `
+                    <div class="film-description">${film.description}</div>
+                ` : ''}
+                
+                <div class="film-actions">
+                    <button class="fav-btn favorited" onclick="toggleFavorite(${film.id})">
+                        <i class="fas fa-heart"></i> Убрать
+                    </button>
+                    <button class="edit-btn" onclick="openEditModal(${film.id})">
+                        <i class="fas fa-edit"></i> Редактировать
+                    </button>
+                </div>
+            </div>
+        `;
+    });
+    
+    container.innerHTML = html;
+}
+
+// Обновляем initApp
+async function initApp() {
+    console.log("Страница загружена, проверяем подключение...");
+    
+    // Проверяем подключение к API
+    const isConnected = await api.checkHealth();
+    console.log("API подключен:", isConnected);
+    
+    if (!isConnected) {
+        alert('⚠️ Сервер не запущен!\n\nЗапустите бэкенд командой:\n\ncd backend\npython run.py');
+        return;
+    }
+    
+    // Загружаем фильмы
+    await loadFilms();
+    console.log("Фильмы загружены:", films.length);
+    
+    // Обновляем фильтр жанров
+    updateGenreFilter();
+    
+    // Обновляем счетчик избранных
+    updateFavoritesCount();
+    
+    // Назначаем обработчики событий для поиска
+    document.getElementById('search').addEventListener('input', function(e) {
+        if (e.target.value === '') {
+            searchFilms(); // Показываем все при очистке
+        }
+    });
+    
+    // Назначаем обработчик для модального окна
+    document.getElementById('editModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeModal();
+        }
+    });
+}
+
+// Экспортируем новые функции
+window.searchFilms = searchFilms;
+window.sortFilms = sortFilms;
+window.toggleFavorites = toggleFavorites;

@@ -74,3 +74,150 @@ h3 {
     padding-bottom: 12px;
     border-bottom: 2px solid #eceff1;
 }
+
+/* ========== ОСНОВНОЙ КОНТЕЙНЕР ========== */
+.main {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.sidebar {
+    flex: 0 0 380px;
+}
+
+.content {
+    flex: 1;
+}
+
+/* ========== ФОРМЫ И ВВОД ========== */
+input, select, textarea {
+    width: 100%;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    border: 2px solid #cfd8dc;
+    border-radius: 12px;
+    font-size: 16px;
+    font-family: inherit;
+    transition: all 0.3s;
+    background: rgba(255, 255, 255, 0.9);
+    color: #546e7a;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #90a4ae;
+    box-shadow: 0 0 0 3px rgba(144, 164, 174, 0.1);
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+/* ========== ОСНОВНЫЕ КНОПКИ ========== */
+.btn-primary {
+    background: linear-gradient(135deg, #80cbc4 0%, #4db6ac 100%);
+    color: white;
+    border: none;
+    padding: 16px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(77, 182, 172, 0.25);
+}
+
+/* ========== СПИСОК ФИЛЬМОВ ========== */
+.films-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 25px;
+}
+
+.film-card {
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 16px;
+    padding: 20px;
+    transition: all 0.3s;
+    border: 2px solid #eceff1;
+    backdrop-filter: blur(12px);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.film-card:hover {
+    transform: translateY(-6px);
+    border-color: #b0bec5;
+    box-shadow: 0 12px 28px rgba(103, 58, 183, 0.1);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+/* ========== ЗАГОЛОВОК ФИЛЬМА ========== */
+.film-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    gap: 10px;
+}
+
+.film-title {
+    font-size: 1.3em;
+    font-weight: 700;
+    color: #455a64;
+    flex: 1;
+    line-height: 1.3;
+}
+
+.film-year {
+    background: linear-gradient(135deg, #90caf9 0%, #64b5f6 100%);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+/* ========== ОСТАЛЬНАЯ ИНФОРМАЦИЯ ========== */
+.film-genre {
+    display: inline-block;
+    background: linear-gradient(135deg, #eceff1 0%, #cfd8dc 100%);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    color: #546e7a;
+    margin-bottom: 12px;
+    align-self: flex-start;
+}
+
+.film-rating {
+    color: #ffb74d;
+    font-weight: 700;
+    margin: 10px 0;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.film-description {
+    color: #607d8b;
+    font-size: 0.95em;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}

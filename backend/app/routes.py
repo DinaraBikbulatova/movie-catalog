@@ -56,6 +56,10 @@ def update_film(film_id):
         if hasattr(film, key) and key != 'id':
             setattr(film, key, value)
 
+    db.session.commit()
+    return jsonify(film.to_dict())
+
+
 @bp.route('/films/<int:film_id>', methods=['DELETE'])
 def delete_film(film_id):
     film = Film.query.get(film_id)

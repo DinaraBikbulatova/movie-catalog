@@ -18,7 +18,7 @@
 
 1. Клонирование репозитория
 ```bash
-git clone 
+git clone https://github.com/DinaraBikbulatova/movie-catalog.git
 cd tp_project
 ```
 

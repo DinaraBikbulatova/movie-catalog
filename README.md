@@ -10,6 +10,50 @@
 - **Избранное**: добавление/удаление фильмов в избранное
 
 ## Технологии
-- **Backend**: Python, Flask, Flask-CORS
+- **Backend**: Python, Flask, Flask-CORS, SQLAlchemy
 - **Frontend**: HTML, CSS, JavaScript 
-- **Хранение данных**: JSON файлы
+- **Хранение данных**: SQLite
+
+## Установка и запуск
+
+1. Клонирование репозитория
+```bash
+git clone https://github.com/DinaraBikbulatova/movie-catalog.git
+cd tp_project
+```
+
+2. Настройка бэкенда
+```bash
+cd backend
+pip install -r requirements.txt
+py run.py
+```
+База данных инициализируется автоматически при первом запуске приложения
+
+Бэкенд будет доступен по адресу: http://localhost:5000
+
+3. Запуск фронтенда
+   
+Откройте movie-catalog\frontend\index.html в папке проекта
+
+Либо
+```bash
+cd frontend
+py -m SimpleHTTPServer 8080
+```
+Фронтенд будет доступен по адресу: http://localhost:8080
+   
+## API Endpoints
+- ```GET	/api/health``` - Проверка работы API
+- ```GET	/api/films``` -	Получить все фильмы
+- ```GET	/api/films``` -	Получить все фильмы
+- ```POST	/api/films``` -	Добавить фильм
+- ```PUT	/api/films/{id}``` - Обновить фильм
+- ```DELETE	/api/films/{id}``` - Удалить фильм
+- ```POST	/api/films/{id}/favorite``` -	Избранное
+- ```GET	/api/films/search``` - Поиск фильмов
+- ```GET	/api/genres``` - Список жанров
+
+## Задачи каждого участника
+
+https://miro.com/app/board/uXjVGS-o57c=/?share_link_id=6218863238

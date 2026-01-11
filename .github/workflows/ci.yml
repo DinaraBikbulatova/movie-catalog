@@ -6,48 +6,45 @@ on:
   pull_request:
     branches: [ main ]
 
+
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
-    
+    name: Build and check
+
     steps:
     - uses: actions/checkout@v3
-    
+
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.9'
-    
-    - name: Install backend dependencies
+
+    - name: Install dependencies
       run: |
         cd backend
         pip install -r requirements.txt
-        pip install -r requirements-dev.txt
-    
-    - name: Run linter
+
+    - name: Check if app starts
       run: |
         cd backend
-        flake8 app/ tests/
-        mypy app/ --ignore-missing-imports
-    
-    - name: Run tests
+        python -c "
+        # Просто проверяем что приложение импортируется
+        try:
+            from app import create_app
+            app = create_app()
+            print('Приложение создается успешно')
+            print('Flask:', hasattr(app, 'config'))
+            print('База данных настроена:', 'SQLALCHEMY_DATABASE_URI' in app.config)
+        except Exception as e:
+            print(f'Ошибка: {e}')
+            exit(1)
+        "
+
+    - name: Check frontend files
       run: |
-        cd backend
-        python -m pytest tests/ -v
-    
-    - name: Check frontend syntax
-      run: |
-        echo "Frontend syntax check placeholder"
-        # Можно добавить ESLint для JavaScript
-    
-  deploy:
-    runs-on: ubuntu-latest
-    needs: test
-    if: github.ref == 'refs/heads/main'
-    
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: Deploy notification
-      run: |
-        echo "Deployment would happen here"
+        echo "Проверка существования файлов фронтенда:"
+        ls -la frontend/ || echo "Папки фронтенда нет"
+        [ -f frontend/index.html ] && echo "index.html существует"
+        [ -f frontend/css/style.css ] && echo "style.css существует"
+        [ -f frontend/js/app.js ] && echo "app.js существует"

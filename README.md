@@ -32,6 +32,12 @@ py run.py
 
 Бэкенд будет доступен по адресу: http://localhost:5000
 
+API доступно по адресу: http://localhost:5000/api
+
+Health check: http://localhost:5000/api/health
+
+Все фильмы: http://localhost:5000/api/films
+
 3. Запуск фронтенда
    
 Откройте movie-catalog\frontend\index.html в папке проекта

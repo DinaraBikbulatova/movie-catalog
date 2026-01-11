@@ -1,63 +1,87 @@
-import json
-import os
+from .database import db
+from datetime import datetime
 
 
-class FilmManager:
-    def __init__(self, data_file='../data/films.json'):
-        self.data_file = os.path.join(os.path.dirname(__file__), data_file)
+class Film(db.Model):
+    __tablename__ = 'films'
 
-    def get_all(self):
-        try:
-            with open(self.data_file, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        except FileNotFoundError:
-            return []
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200), nullable=False)
+    year = db.Column(db.Integer, nullable=False)
+    genre = db.Column(db.String(100), nullable=False)
+    rating = db.Column(db.Float, default=0.0)
+    description = db.Column(db.Text, default='')
+    favorite = db.Column(db.Boolean, default=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-    def save(self, films):
-        with open(self.data_file, 'w', encoding='utf-8') as f:
-            json.dump(films, f, ensure_ascii=False, indent=2)
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'year': self.year,
+            'genre': self.genre,
+            'rating': self.rating,
+            'description': self.description,
+            'favorite': self.favorite
+        }
 
-    def add(self, film):
-        films = self.get_all()
-        film['id'] = max([f.get('id', 0) for f in films], default=0) + 1
-        film.setdefault('favorite', False)
-        films.append(film)
-        self.save(films)
-        return film
+    @classmethod
+    def get_all(cls):
+        return [film.to_dict() for film in cls.query.all()]
 
-    def delete(self, film_id):
-        films = self.get_all()
-        films = [f for f in films if f['id'] != film_id]
-        self.save(films)
+    @classmethod
+    def add(cls, data):
+        film = cls(
+            title=data['title'],
+            year=data['year'],
+            genre=data['genre'],
+            rating=data.get('rating', 0.0),
+            description=data.get('description', ''),
+            favorite=data.get('favorite', False)
+        )
+        db.session.add(film)
+        db.session.commit()
+        return film.to_dict()
 
-    def update(self, film_id, data):
-        films = self.get_all()
-        for film in films:
-            if film['id'] == film_id:
-                film.update(data)
-                self.save(films)
-                return film
+    @classmethod
+    def delete(cls, film_id):
+        film = cls.query.get(film_id)
+        if film:
+            db.session.delete(film)
+            db.session.commit()
+            return True
+        return False
+
+    @classmethod
+    def update(cls, film_id, data):
+        film = cls.query.get(film_id)
+        if film:
+            for key, value in data.items():
+                if hasattr(film, key):
+                    setattr(film, key, value)
+            db.session.commit()
+            return film.to_dict()
         return None
 
-    def toggle_favorite(self, film_id):
-        films = self.get_all()
-        for film in films:
-            if film['id'] == film_id:
-                film['favorite'] = not film.get('favorite', False)
-                self.save(films)
-                return film
+    @classmethod
+    def toggle_favorite(cls, film_id):
+        film = cls.query.get(film_id)
+        if film:
+            film.favorite = not film.favorite
+            db.session.commit()
+            return film.to_dict()
         return None
 
-    def search(self, query=None, genre=None):
-        films = self.get_all()
+    @classmethod
+    def search(cls, query=None, genre=None):
+        films = cls.query
         if query:
-            query_lower = query.lower()
-            films = [f for f in films if
-                     query_lower in f['title'].lower() or
-                     query_lower in f.get('description', '').lower()]
+            films = films.filter(
+                db.or_(
+                    cls.title.ilike(f'%{query}%'),
+                    cls.description.ilike(f'%{query}%')
+                )
+            )
         if genre:
-            films = [f for f in films if genre.lower() in f['genre'].lower()]
-        return films
-
-
-film_manager = FilmManager()
+            films = films.filter(cls.genre.ilike(f'%{genre}%'))
+        return [film.to_dict() for film in films.all()]

@@ -5,6 +5,7 @@ app = create_app()
 if __name__ == '__main__':
     print("🚀 Сервер запущен: http://localhost:5000")
     print("📡 API доступно по адресу: http://localhost:5000/api")
+    print("🗄️  База данных: SQLite (backend/data/films.db)")
     print("\n📖 Доступные endpoints:")
     print("   GET  /api/health             - проверка работы")
     print("   GET  /api/films              - все фильмы")

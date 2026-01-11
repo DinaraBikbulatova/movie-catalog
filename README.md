@@ -30,11 +30,18 @@ py run.py
 ```
 База данных инициализируется автоматически при первом запуске приложения
 
-Бэкенд доступен по адресу: http://localhost:5000
+Бэкенд будет доступен по адресу: http://localhost:5000
 
 3. Запуск фронтенда
    
-Откройте frontend/index.html в браузере
+Откройте movie-catalog\frontend\index.html в папке проекта
+
+Либо
+```bash
+cd frontend
+py -m SimpleHTTPServer 8080
+```
+Фронтенд будет доступен по адресу: http://localhost:8080
    
 ## API Endpoints
 - ```GET	/api/health``` - Проверка работы API

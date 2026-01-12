@@ -31,17 +31,14 @@ class Film(db.Model):
 
 def init_app(app):
 
-    # Получаем абсолютный путь к корню проекта (tp_project)
     project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    # Путь к папке data
     data_dir = os.path.join(project_root, 'data')
 
-    # Создаем папку data, если она не существует
+
     if not os.path.exists(data_dir):
         os.makedirs(data_dir, exist_ok=True)
-        print(f"📁 Создана папка: {data_dir}")
+        print(f"Создана папка: {data_dir}")
 
-    # Абсолютный путь к файлу базы данных
     db_path = os.path.join(data_dir, 'films.db')
 
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
@@ -51,25 +48,22 @@ def init_app(app):
         'pool_recycle': 300,
     }
 
-    # Выводим информацию о пути к БД (для отладки)
-    print(f"🗄️  База данных: {db_path}")
+    print(f"База данных: {db_path}")
 
     db.init_app(app)
 
     with app.app_context():
-        # Создаём все таблицы
+
         db.create_all()
 
-        # Если таблица пустая - добавляем начальные данные
         if Film.query.count() == 0:
             seed_initial_data()
-            print("✅ База данных инициализирована с начальными данными")
+            print("База данных инициализирована с начальными данными")
         else:
-            print(f"📊 В базе уже есть {Film.query.count()} фильмов")
+            print(f"В базе уже есть {Film.query.count()} фильмов")
 
 
 def seed_initial_data():
-    """Добавляем начальные данные в БД"""
     initial_films = [
         {
             'title': 'Интерстеллар',

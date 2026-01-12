@@ -6,7 +6,7 @@ def create_app():
     app = Flask(__name__)
     CORS(app)
 
-    # Инициализируем БД
+
     init_app(app)
 
     from . import routes

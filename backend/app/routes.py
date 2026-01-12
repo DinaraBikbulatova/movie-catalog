@@ -60,7 +60,6 @@ def update_film(film_id):
     return jsonify(film.to_dict())
 
 
-
 @bp.route('/films/<int:film_id>', methods=['DELETE'])
 def delete_film(film_id):
     film = Film.query.get(film_id)
@@ -105,7 +104,6 @@ def search_films():
     return jsonify(films)
 
 
-# Дополнительный эндпоинт для получения жанров
 @bp.route('/genres', methods=['GET'])
 def get_genres():
     genres = db.session.query(Film.genre).distinct().all()

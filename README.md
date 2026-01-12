@@ -30,10 +30,6 @@ py run.py
 ```
 База данных инициализируется автоматически при первом запуске приложения
 
-Бэкенд будет доступен по адресу: http://localhost:5000
-
-API доступно по адресу: http://localhost:5000/api
-
 Health check: http://localhost:5000/api/health
 
 Все фильмы: http://localhost:5000/api/films
@@ -45,7 +41,7 @@ Health check: http://localhost:5000/api/health
 Либо
 ```bash
 cd frontend
-py -m SimpleHTTPServer 8080
+python -m http.server 8080
 ```
 Фронтенд будет доступен по адресу: http://localhost:8080
    
